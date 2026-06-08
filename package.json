@@ -1,0 +1,8 @@
+{
+  "name": "til",
+  "private": true,
+  "scripts": {
+    "til:new": "node scripts/new-til.mjs",
+    "til:sync": "node scripts/update-readme.mjs"
+  }
+}
