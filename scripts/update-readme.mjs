@@ -10,75 +10,25 @@ const dailyDir = path.join(rootDir, "daily");
 const startMarker = "<!-- TIL-LIST:START -->";
 const endMarker = "<!-- TIL-LIST:END -->";
 
-function extractSection(content, heading) {
-  const lines = content.split(/\r?\n/);
-  const startIndex = lines.findIndex((line) => line.trim() === `## ${heading}`);
-
-  if (startIndex === -1) {
-    return "";
-  }
-
-  const sectionLines = [];
-
-  for (let index = startIndex + 1; index < lines.length; index += 1) {
-    const line = lines[index];
-
-    if (line.startsWith("## ")) {
-      break;
-    }
-
-    sectionLines.push(line);
-  }
-
-  return sectionLines.join("\n").trim();
-}
-
-function extractFirstAvailableSection(content, headings) {
-  for (const heading of headings) {
-    const section = extractSection(content, heading);
-
-    if (section) {
-      return section;
-    }
-  }
-
-  return "";
-}
-
-function firstMeaningfulLine(section) {
-  const lines = section
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter(Boolean);
-
-  for (const line of lines) {
-    if (line === "-" || line === "- 없음") {
-      return "작성 전";
-    }
-
-    if (line.startsWith("- ")) {
-      const value = line.slice(2).trim();
-      return value || "작성 전";
-    }
-  }
-
-  if (lines[0] === "-") {
-    return "작성 전";
-  }
-
-  return lines[0] ?? "작성 전";
-}
-
 function escapeTableCell(value) {
   return value.replace(/\|/g, "\\|");
 }
 
 function extractTitle(content) {
-  const titleLine = content
-    .split(/\r?\n/)
-    .find((line) => line.trim().startsWith("# "));
+  const lines = content.split(/\r?\n/);
+  const h1 = lines.find((line) => line.trim().startsWith("# "));
 
-  return titleLine ? titleLine.replace(/^#\s*/, "").trim() : "제목 없음";
+  if (h1) {
+    return h1.replace(/^#\s*/, "").trim();
+  }
+
+  const h2 = lines.find((line) => line.trim().startsWith("## "));
+
+  if (h2) {
+    return h2.replace(/^##\s*/, "").trim();
+  }
+
+  return "제목 없음";
 }
 
 function extractDate(title, fallbackFileName) {
@@ -110,14 +60,10 @@ async function collectEntries() {
     const filePath = path.join(dailyDir, fileName);
     const content = await fs.readFile(filePath, "utf8");
     const title = extractTitle(content);
-    const topic = firstMeaningfulLine(
-      extractFirstAvailableSection(content, ["주제", "오늘 배운 것 한 줄"]),
-    );
 
     entries.push({
       date: extractDate(title, fileName),
       fileName,
-      topic,
       title,
     });
   }
@@ -133,13 +79,13 @@ function renderArchive(entries) {
   const lines = [
     `총 ${entries.length}개`,
     "",
-    "| 날짜 | 주제 | 링크 |",
+    "| 날짜 | 제목 | 링크 |",
     "| --- | --- | --- |",
   ];
 
   for (const entry of entries) {
     lines.push(
-      `| ${escapeTableCell(entry.date)} | ${escapeTableCell(entry.topic)} | [보기](daily/${entry.fileName}) |`,
+      `| ${escapeTableCell(entry.date)} | ${escapeTableCell(entry.title)} | [보기](daily/${entry.fileName}) |`,
     );
   }
 
