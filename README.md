@@ -76,10 +76,11 @@ npm run til:sync
 아래 구간은 `scripts/update-readme.mjs`가 자동으로 관리합니다.
 
 <!-- TIL-LIST:START -->
-총 3개
+총 4개
 
 | 날짜 | 제목 | 링크 |
 | --- | --- | --- |
+| 2026-06-17 | S3 이미지 관리 (캐싱, 버전관리) | [보기](daily/2026-06-17-s3-picture-book-image-management.md) |
 | 2026-06-16 | Voice clone TTS 서비스 품질 개선 | [보기](daily/2026-06-16-voice-clone-tts-quality.md) |
 | 2026-06-09 | KCP 본인인증 v2 마이그레이션 | [보기](daily/2026-06-09-kcp-v2-migration.md) |
 | 2026-06-09 | DB 파티션 분할과 프로시저 배치 처리 | [보기](daily/2026-06-09-db-partition-procedure-batch.md) |
