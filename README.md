@@ -76,11 +76,12 @@ npm run til:sync
 아래 구간은 `scripts/update-readme.mjs`가 자동으로 관리합니다.
 
 <!-- TIL-LIST:START -->
-총 7개
+총 8개
 
 | 날짜 | 제목 | 링크 |
 | --- | --- | --- |
-| 2026-06-28 | MQTT Retain 메시지와 메모리 관리 | [보기](daily/2026-06-27-mqtt-retain-memory-management.md) |
+| 2026-07-01 | WebRTC 연결 방식과 STUN/TURN 서버 | [보기](daily/2026-07-01-webrtc-connection-stun-turn.md) |
+| 2026-06-28 | MQTT Retain 메시지와 메모리 관리 | [보기](daily/2026-06-28-mqtt-retain-memory-management.md) |
 | 2026-06-27 | MQTT 서버 이해하기 (구독, Push, 브로커) | [보기](daily/2026-06-27-mqtt-broker-pub-sub.md) |
 | 2026-06-22 | EC2 GPU 모델 서버 운영과 자동 업데이트 장애 대응 | [보기](daily/2026-06-22-ec2-gpu-model-server-auto-update.md) |
 | 2026-06-17 | S3 이미지 관리 (캐싱, 버전관리) | [보기](daily/2026-06-17-s3-picture-book-image-management.md) |
